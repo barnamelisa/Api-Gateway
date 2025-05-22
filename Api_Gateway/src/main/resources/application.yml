@@ -1,0 +1,13 @@
+server:
+  port: 8085
+
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: cofetarie-service
+          uri: http://localhost:8080/cofetarie-service
+          predicates:
+            - Path=/cofetarie/**
+          filters:
+            - StripPrefix=1
