@@ -5,9 +5,16 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: cofetarie-service
-          uri: http://localhost:8080/cofetarie-service
+        - id: cofetarie-service-root
+          uri: http://localhost:8080
+          predicates:
+            - Path=/cofetarie
+          filters:
+            - RewritePath=/cofetarie, /cofetarie-service/cofetarie
+
+        - id: cofetarie-service-with-id
+          uri: http://localhost:8080
           predicates:
             - Path=/cofetarie/**
           filters:
-            - StripPrefix=1
+            - RewritePath=/cofetarie/(?<remaining>.*), /cofetarie-service/cofetarie/${remaining}
