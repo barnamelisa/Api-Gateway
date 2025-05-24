@@ -18,3 +18,18 @@ spring:
             - Path=/cofetarie/**
           filters:
             - RewritePath=/cofetarie/(?<remaining>.*), /cofetarie-service/cofetarie/${remaining}
+
+      globalcors:
+          corsConfigurations:
+            '[/**]':
+              allowedOrigins:
+                - "http://localhost:3000"
+              allowedMethods:
+                - GET
+                - POST
+                - PUT
+                - DELETE
+                - OPTIONS
+              allowedHeaders:
+                - "*"
+              allowCredentials: true
