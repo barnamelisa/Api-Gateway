@@ -19,17 +19,52 @@ spring:
           filters:
             - RewritePath=/cofetarie/(?<remaining>.*), /cofetarie-service/cofetarie/${remaining}
 
+        - id: prajitura-service-root
+          uri: http://localhost:8081
+          predicates:
+            - Path=/prajitura
+          filters:
+            - RewritePath=/prajitura, /prajitura-service/prajitura
+
+        - id: prajitura-service-with-id
+          uri: http://localhost:8081
+          predicates:
+            - Path=/prajitura/**
+          filters:
+            - RewritePath=/prajitura/(?<remaining>.*), /prajitura-service/prajitura/${remaining}
+
+        - id: user-service-root
+          uri: http://localhost:8082
+          predicates:
+            - Path=/user/**
+          filters:
+            - RewritePath=/user/(?<remaining>.*), /user-service/${remaining}
+
+        - id: auth-service-root
+          uri: http://localhost:8082
+          predicates:
+            - Path=/auth
+          filters:
+            - RewritePath=/auth, /auth
+
+        - id: auth-service-with-path
+          uri: http://localhost:8082
+          predicates:
+            - Path=/auth/**
+          filters:
+            - RewritePath=/auth/(?<remaining>.*), /auth/${remaining}
+
       globalcors:
-          corsConfigurations:
-            '[/**]':
-              allowedOrigins:
-                - "http://localhost:3000"
-              allowedMethods:
-                - GET
-                - POST
-                - PUT
-                - DELETE
-                - OPTIONS
-              allowedHeaders:
-                - "*"
-              allowCredentials: true
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins:
+              - "http://localhost:3000"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+            allowedHeaders:
+              - "*"
+            allowCredentials: true
